@@ -49,14 +49,14 @@ class App extends Component {
     zoom: 12,
     })
 
+//below this is the code for info window
+    var infowindow = new window.google.maps.InfoWindow()
+
+
     this.state.venues.map(recommPlace => {
 
       var contentString = `${recommPlace.venue.name}`
 
-//below this is the code for info window
-      var infowindow = new window.google.maps.InfoWindow({
-        content: contentString
-      })
 
 
 //below this is the code for marker
@@ -67,7 +67,10 @@ class App extends Component {
       })
 
       marker.addListener('click', function() {
-      infowindow.open(map, marker)
+        infowindow.setContent(contentString)
+        
+
+        infowindow.open(map, marker)
     })
 
       
