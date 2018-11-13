@@ -44,11 +44,23 @@ class App extends Component {
 
 
   initMap = () => {
-  const map = new window.google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
-      } 
+    const map = new window.google.maps.Map(document.getElementById('map'), {
+    center: {lat: 41.881832, lng:  -87.623177},
+    zoom: 8
+    });
+
+    this.state.venues.map(recommendedVenue => {
+      position: [lat: recommendedVenue.venue.location.lat, lng: recommendedVenue.venue.location.lon],
+      map: map,
+      title: 'Hello World!'
+    })
+
+    var marker = new window.google.maps.Marker({
+    position: {lat: 41.881832, lng:  -87.623177},
+    map: map,
+    title: 'Hello World!'
+    });
+  } 
 
   render() {
     return (
