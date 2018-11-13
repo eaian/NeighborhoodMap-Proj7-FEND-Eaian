@@ -53,7 +53,8 @@ class App extends Component {
 
       var contentString = `${recommPlace.venue.name}`
 
-      var infowindow = new.google.maps.InfoWindow({
+//below this is the code for info window
+      var infowindow = new window.google.maps.InfoWindow({
         content: contentString
       })
 
@@ -64,6 +65,11 @@ class App extends Component {
         map: map,
         title: recommPlace.venue.name
       })
+
+      marker.addListener('click', function() {
+      infowindow.open(map, marker)
+    })
+
       
     })
 
