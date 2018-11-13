@@ -13,7 +13,6 @@ class App extends Component {
 
   componentDidMount () {
   this.getVenues()
-  this.loadingMap()
   }
 
   loadingMap = () => {
@@ -35,8 +34,9 @@ class App extends Component {
     .then(response => {
       this.setState({
         venues: response.data.response.groups[0].items //hare is the specific data parameter location or object
-      })
-    }).catch (error => {
+      }, this.loadingMap())
+    })
+    .catch (error => {
       console.log("THIS HAS ERROR!!! " + error)
     })
 
@@ -44,23 +44,30 @@ class App extends Component {
 
 
   initMap = () => {
-    const map = new window.google.maps.Map(document.getElementById('map'), {
+    var map = new window.google.maps.Map(document.getElementById('map'), {
     center: {lat: 41.881832, lng:  -87.623177},
-    zoom: 8
-    });
-
-    this.state.venues.map(recommendedVenue => {
-      position: [lat: recommendedVenue.venue.location.lat, lng: recommendedVenue.venue.location.lon],
-      map: map,
-      title: 'Hello World!'
+    zoom: 12,
     })
 
-    var marker = new window.google.maps.Marker({
-    position: {lat: 41.881832, lng:  -87.623177},
-    map: map,
-    title: 'Hello World!'
-    });
-  } 
+    this.state.venues.map(recommPlace => {
+
+      var contentString = `${recommPlace.venue.name}`
+
+      var infowindow = new.google.maps.InfoWindow({
+        content: contentString
+      })
+
+
+//below this is the code for marker
+      var marker = new window.google.maps.Marker({
+        position: {lat: recommPlace.venue.location.lat, lng: recommPlace.venue.location.lng},
+        map: map,
+        title: recommPlace.venue.name
+      })
+      
+    })
+
+}
 
   render() {
     return (
