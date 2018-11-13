@@ -1,18 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg'; disabling this line for the logo as not being used
 import './App.css';
+
+import axios from 'axios'
 
 
 class App extends Component {
 
-componentDidMount () {
-this.renderMap()
-}
+  componentDidMount () {
+  this.getVenues()
+  this.loadingMap()
+  }
 
-renderMap = () => {
+  loadingMap = () => {
   loadingScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyA4mmgp1LraZXbbC4QlHVAVxUzgptilqbw&callback=initMap")
   window.initMap = this.initMap
-}
+  }
+
+  getVenues = () => {
+    const endPoint = "https://api.foursquare.com/v2/venues/explore?"
+    const parameters = {
+      client_id: "HVG1OO2G4ACXIALSKRKNFT1PU2WAXEC3ROY5DCOZUG1OUHQN",
+      client_secret: "UFWFEKPRATXLGDUDPH32B2O4AON4PTIDNQCQETCBTU2MISAQ",
+      query: "food",
+      near: "Chicago,IL",
+      v: "20182507"
+    }
+
+    axios.get(endPoint + new URLSearchParams(parameters))
+    .then(response => {
+      console.log(response)
+    }).catch (error => {
+      console.log("THIS HAS ERROR!!! " + error)
+    })
+
+  }
 
 
   initMap = () => {
