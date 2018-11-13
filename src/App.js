@@ -7,6 +7,10 @@ import axios from 'axios'
 
 class App extends Component {
 
+  state = {
+    venues:[]
+  }
+
   componentDidMount () {
   this.getVenues()
   this.loadingMap()
@@ -29,7 +33,9 @@ class App extends Component {
 
     axios.get(endPoint + new URLSearchParams(parameters))
     .then(response => {
-      console.log(response)
+      this.setState({
+        venues: response.data.response.groups[0].items //hare is the specific data parameter location or object
+      })
     }).catch (error => {
       console.log("THIS HAS ERROR!!! " + error)
     })
